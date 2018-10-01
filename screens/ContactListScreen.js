@@ -126,29 +126,29 @@ export default class ContactListScreen extends React.Component {
 
 		if (this.state.loaded) {
 			return (
-				<View style={styles.container}>
-					<ScrollView>
-						<SectionList
+    <View style={styles.container}>
+        <ScrollView>
+            <SectionList
 							sections={sections}
 							renderSectionHeader={({ section: { title } }) => (
-								<View style={styles.header}>
-									<ContactListHeader title={title} />
-								</View>
+    <View style={styles.header}>
+        <ContactListHeader title={title} />
+    </View>
 							)}
 							renderItem={({ item, index, section }) => (
-								<View style={styles.item}>
-									<ContactListItem
+    <View style={styles.item}>
+        <ContactListItem
 										passBackId={id => {
 											this.toDetails(id);
 										}}
 										item={item}
 									/>
-								</View>
+    </View>
 							)}
 							keyExtractor={(item, index) => item + index}
 						/>
-					</ScrollView>
-				</View>
+        </ScrollView>
+    </View>
 			);
 		} else {
 			return <ActivityIndicator />;
