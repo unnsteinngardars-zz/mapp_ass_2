@@ -6,12 +6,13 @@ import Fonts from '../constants/fonts';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: Colors.contactItem
+		backgroundColor: Colors.lightpink
 	},
 	text: {
 		fontFamily: Fonts.contactItem,
 		fontSize: 16,
-		padding: 10
+		padding: 10,
+		color: Colors.white
 	}
 });
 

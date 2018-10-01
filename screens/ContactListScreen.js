@@ -116,7 +116,7 @@ export default class ContactListScreen extends React.Component {
 
 	toDetails(id) {
 		this.props.navigation.navigate(
-			'ContactDetailScreen',
+			'ContactDetail',
 			this.state.dataById[id]
 		);
 	}

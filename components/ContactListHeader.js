@@ -6,7 +6,7 @@ import Fonts from '../constants/fonts';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: Colors.contactHeader
+		backgroundColor: Colors.hotpink
 	},
 	text: {
 		fontFamily: Fonts.contactHeader,

@@ -11,21 +11,36 @@ import {
 import HomeDetail from '../components/HomeDetail';
 import WorkDetail from '../components/WorkDetail';
 
+import Colors from '../constants/colors';
+
 const styles = StyleSheet.create({
 	center: {
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
-	upperContainer: {
+	container: {
+		flex: 1,
+		justifyContent: 'center'
+	},
+	avatarContainer: {
+		flex: 2,
 		justifyContent: 'flex-end',
-		alignItems: 'center',
-		height: '60%'
+		alignItems: 'center'
+	},
+	buttonContainer: {
+		flex: 1,
+		alignItems: 'center'
+	},
+	contentContainer: {
+		flex: 1,
+		justifyContent: 'flex-start',
+		alignItems: 'center'
 	},
 	avatar: {
 		width: 200,
 		height: 200,
 		borderWidth: 2,
-		borderColor: '#E81274',
+		borderColor: Colors.hotpink,
 		borderRadius: 10
 	},
 	name: {
@@ -33,7 +48,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		marginBottom: 10,
 		marginTop: 10,
-		color: '#000000',
+		color: Colors.hotpink,
 		fontSize: 20
 	},
 	button: {
@@ -41,7 +56,7 @@ const styles = StyleSheet.create({
 		width: 200,
 		alignItems: 'center',
 		borderRadius: 10,
-		backgroundColor: '#E81274'
+		backgroundColor: Colors.hotpink
 	},
 	buttonText: {
 		padding: 20,
@@ -56,8 +71,8 @@ export default class ContactDetailScreen extends React.Component {
 		this.springValue = new Animated.Value(0.4);
 		this.animatedValue = new Animated.Value(0);
 		this.state = {
-			ButtonText: 'Show work info',
-			DisplayHome: true // Show either home or work info
+			buttonText: 'Show work info',
+			displayHome: true // Show either home or work info
 		};
 	}
 
@@ -89,39 +104,18 @@ export default class ContactDetailScreen extends React.Component {
 	buttonPressed = () => {
 		this.animate();
 		this.spring();
-		const { DisplayHome } = this.state;
-		if (DisplayHome) {
-			this.setState({ ButtonText: 'Show home info', DisplayHome: false });
+		const { displayHome } = this.state;
+		if (displayHome) {
+			this.setState({ buttonText: 'Show home info', displayHome: false });
 		} else {
-			this.setState({ ButtonText: 'Show work info', DisplayHome: true });
+			this.setState({ buttonText: 'Show work info', displayHome: true });
 		}
 	};
 
 	render() {
-		//const { avatar, name, work, home} = this.props;
-		// console.log(this.props);
-		// let obj = {
-		// 	name: { first_name: 'Kaylyn', last_name: 'Taillant' },
-		// 	avatar:
-		// 		'https://robohash.org/quialiasaliquid.bmp?size=250x250&set=set1',
-		// 	work: {
-		// 		email: 'ktaillant0@psu.edu',
-		// 		phone_number: '632-570-5642',
-		// 		address: '99 Linden Plaza',
-		// 		job_title: 'Engineer II',
-		// 		department: 'Research and Development',
-		// 		company_name: 'Topicstorm'
-		// 	},
-		// 	home: {
-		// 		email: 'ktaillant0@wikispaces.com',
-		// 		phone_number: '563-779-8844',
-		// 		address: '15715 Miller Plaza'
-		// 	}
-		// };
-
-		const { avatar, name, work, home } = this.props;
-		const { first_name: firstName, last_name: lastName } = name;
-		const { ButtonText, DisplayHome } = this.state;
+		const { avatar, name, work, home } = this.props.navigation.state.params;
+		const { buttonText, displayHome } = this.state;
+		const { first_name, last_name } = name;
 
 		// Used for animation for home/work info
 		const opacity = this.animatedValue.interpolate({
@@ -130,8 +124,8 @@ export default class ContactDetailScreen extends React.Component {
 		});
 
 		return (
-			<View>
-				<View style={styles.upperContainer}>
+			<View style={styles.container}>
+				<View style={styles.avatarContainer}>
 					<Animated.View
 						style={{ transform: [{ scale: this.springValue }] }}
 					>
@@ -142,26 +136,30 @@ export default class ContactDetailScreen extends React.Component {
 							}}
 						/>
 					</Animated.View>
+				</View>
+				<View style={styles.buttonContainer}>
 					<Text style={styles.name}>
-						{firstName} {lastName}
+						{first_name} {last_name}
 					</Text>
 					<TouchableHighlight
 						onPress={this.buttonPressed}
 						underlayColor="white"
 					>
 						<View style={styles.button}>
-							<Text style={styles.buttonText}>{ButtonText}</Text>
+							<Text style={styles.buttonText}>{buttonText}</Text>
 						</View>
 					</TouchableHighlight>
 				</View>
-				<Animated.View style={{ opacity, height: '40%' }}>
-					{/* Boolean variable for displaying home or work info.  */}
-					{DisplayHome ? (
-						<HomeDetail data={home} />
-					) : (
-						<WorkDetail data={work} />
-					)}
-				</Animated.View>
+				<View style={styles.contentContainer}>
+					<Animated.View style={{ opacity, height: '40%' }}>
+						{/* Boolean variable for displaying home or work info.  */}
+						{displayHome ? (
+							<HomeDetail data={home} />
+						) : (
+							<WorkDetail data={work} />
+						)}
+					</Animated.View>
+				</View>
 			</View>
 		);
 	}
