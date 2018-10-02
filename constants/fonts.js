@@ -1,4 +1,4 @@
 export default {
-	contactItem: 'Trebuchet-BoldItalic',
-	contactHeader: 'TrebuchetMS-Bold'
+	contactItem: 'Verdana',
+	contactHeader: 'Verdana-Bold'
 };

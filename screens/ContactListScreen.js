@@ -10,24 +10,24 @@ import {
 
 import ContactListItem from '../components/ContactListItem';
 import ContactListHeader from '../components/ContactListHeader';
-import ContactListFooter from '../components/ContactListFooter';
-
-import data from '../ass2testdata.json';
+import Colors from '../constants/colors';
+import data from '../ass2data.json';
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'center'
+		justifyContent: 'center',
+		backgroundColor: Colors.white
 	},
 	header: {
 		flex: 1,
-		marginLeft: 10,
+		// marginLeft: 10,
 		paddingTop: 10,
 		paddingBottom: 10
 	},
 	item: {
 		flex: 1,
-		marginLeft: 10,
+		// marginLeft: 10,
 		paddingTop: 4,
 		paddingBottom: 4
 	}
@@ -44,10 +44,9 @@ export default class ContactListScreen extends React.Component {
 	}
 
 	componentDidMount() {
-		let { sections, dataById } = this.convertData(data);
+		const { sections, dataById } = this.convertData(data);
 		this.sort(sections);
 		this.setState({ sections: sections, dataById: dataById, loaded: true });
-		console.log(sections);
 	}
 
 	/**
@@ -63,12 +62,12 @@ export default class ContactListScreen extends React.Component {
 			// create object to map items by ID
 			item.id = id;
 			dataById[id] = item;
-			let key = item['name']['first_name'].charAt(0);
+			let key = item.name.first_name.charAt(0);
 			let value = {
 				id: id,
-				name:
-					item['name']['first_name'] + ' ' + item['name']['last_name']
+				name: item.name.first_name + ' ' + item.name.last_name
 			};
+
 			for (var index in acc) {
 				if (acc[index].title == key) {
 					acc[index].data.push(value);
@@ -121,34 +120,48 @@ export default class ContactListScreen extends React.Component {
 		);
 	}
 
+	delete(id) {
+		const { dataById, sections } = this.state;
+		delete dataById[id];
+		sections.map(section => {
+			const newData = section.data.filter(item => {
+				return item.id != id;
+			});
+			section.data = newData;
+			return section;
+		});
+		this.setState({ sections: sections, dataById: dataById });
+	}
+
 	render() {
 		const { sections } = this.state;
 
 		if (this.state.loaded) {
 			return (
-    <View style={styles.container}>
-        <ScrollView>
-            <SectionList
+				<View style={styles.container}>
+					<ScrollView>
+						<SectionList
 							sections={sections}
 							renderSectionHeader={({ section: { title } }) => (
-    <View style={styles.header}>
-        <ContactListHeader title={title} />
-    </View>
+								<View style={styles.header}>
+									<ContactListHeader title={title} />
+								</View>
 							)}
 							renderItem={({ item, index, section }) => (
-    <View style={styles.item}>
-        <ContactListItem
+								<View style={styles.item}>
+									<ContactListItem
+										delete={id => this.delete(id)}
 										passBackId={id => {
 											this.toDetails(id);
 										}}
 										item={item}
 									/>
-    </View>
+								</View>
 							)}
 							keyExtractor={(item, index) => item + index}
 						/>
-        </ScrollView>
-    </View>
+					</ScrollView>
+				</View>
 			);
 		} else {
 			return <ActivityIndicator />;
