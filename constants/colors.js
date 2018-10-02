@@ -1,4 +1,5 @@
 export default {
+	red: '#ff1800',
 	white: '#FFF',
 	hotpink: '#ff2377',
 	bubblebum: '#ea4f8a',

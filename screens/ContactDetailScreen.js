@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import HomeDetail from '../components/HomeDetail';
 import WorkDetail from '../components/WorkDetail';
-
 import Colors from '../constants/colors';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
 	center: {
@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		flex: 1,
-		justifyContent: 'center'
+		justifyContent: 'center',
+		backgroundColor: Colors.white
 	},
 	avatarContainer: {
 		flex: 2,
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	contentContainer: {
-		flex: 1,
+		flex: 2,
 		justifyContent: 'flex-start',
 		alignItems: 'center'
 	},
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		padding: 20,
-		color: '#000000',
+		color: Colors.white,
 		fontSize: 16
 	}
 });
@@ -124,43 +125,47 @@ export default class ContactDetailScreen extends React.Component {
 		});
 
 		return (
-    <View style={styles.container}>
-        <View style={styles.avatarContainer}>
-            <Animated.View
+			<View style={styles.container}>
+				<View style={styles.avatarContainer}>
+					<Animated.View
 						style={{ transform: [{ scale: this.springValue }] }}
 					>
-                <Image
+						<Image
 							style={styles.avatar}
 							source={{
 								uri: avatar
 							}}
 						/>
-            </Animated.View>
-        </View>
-        <View style={styles.buttonContainer}>
-            <Text style={styles.name}>
-                {first_name} {last_name}
-            </Text>
-            <TouchableHighlight
+					</Animated.View>
+				</View>
+				<View style={styles.buttonContainer}>
+					<Text style={styles.name}>
+						{first_name} {last_name}
+					</Text>
+					<TouchableHighlight
 						onPress={this.buttonPressed}
 						underlayColor="white"
 					>
-                <View style={styles.button}>
-                    <Text style={styles.buttonText}>{buttonText}</Text>
-                </View>
-            </TouchableHighlight>
-        </View>
-        <View style={styles.contentContainer}>
-            <Animated.View style={{ opacity, height: '40%' }}>
-                {/* Boolean variable for displaying home or work info.  */}
-                {displayHome ? (
-                    <HomeDetail data={home} />
+						<View style={styles.button}>
+							<Text style={styles.buttonText}>{buttonText}</Text>
+						</View>
+					</TouchableHighlight>
+				</View>
+				<View style={styles.contentContainer}>
+					<Animated.View style={{ opacity, height: '40%' }}>
+						{/* Boolean variable for displaying home or work info.  */}
+						{displayHome ? (
+							<HomeDetail data={home} />
 						) : (
-    <WorkDetail data={work} />
+							<WorkDetail data={work} />
 						)}
-            </Animated.View>
-        </View>
-    </View>
+					</Animated.View>
+				</View>
+			</View>
 		);
 	}
 }
+
+ContactDetailScreen.propTypes = {
+	navigation: PropTypes.object.isRequired
+};

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import Colors from '../constants/colors';
 import Fonts from '../constants/fonts';
 
@@ -13,7 +14,8 @@ const styles = StyleSheet.create({
 		fontSize: 36,
 		marginLeft: 5,
 		paddingTop: 5,
-		paddingBottom: 5
+		paddingBottom: 5,
+		color: Colors.white
 	}
 });
 
@@ -27,3 +29,7 @@ export default class ContactListItem extends React.Component {
 		);
 	}
 }
+
+ContactListItem.propTypes = {
+	title: PropTypes.object.isRequired
+};
