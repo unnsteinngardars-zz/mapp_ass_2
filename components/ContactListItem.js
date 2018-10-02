@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import Swipeable from 'react-native-swipeable';
 import PropTypes from 'prop-types';
 import Colors from '../constants/colors';
-import Fonts from '../constants/fonts';
 
 const styles = StyleSheet.create({
 	container: {
@@ -11,7 +10,6 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.white
 	},
 	text: {
-		fontFamily: Fonts.contactItem,
 		fontSize: 16,
 		padding: 10,
 		color: Colors.lightpink,
@@ -56,8 +54,32 @@ export default class ContactListItem extends React.Component {
 		];
 	}
 
+	shouldComponentUpdate(nextProps){
+		return this.props != nextProps;
+	}
+
+	
+	/***
+	 * Navigate to the detail screen
+	 */
+	toDetails(id) {
+		this.props.navigation.navigate(
+			'ContactDetail',
+			this.props.details
+		);
+	}
+
+	shouldComponentUpdate(nextProps) {
+		if(this.props.details == nextProps.details) {
+			return false;
+		}
+		return true;
+	}
+
+
 	render() {
 		const { item } = this.props;
+		//console.log(`Render item: ${item.name}`);
 		return (
 			<View style={styles.container}>
 				<Swipeable
@@ -75,7 +97,7 @@ export default class ContactListItem extends React.Component {
 					<TouchableHighlight
 						underlayColor={Colors.white}
 						onPress={() => {
-							this.props.passBackId(item.id);
+							this.toDetails(item.id)
 						}}
 					>
 						<Text style={styles.text}>{item.name}</Text>
@@ -87,7 +109,8 @@ export default class ContactListItem extends React.Component {
 }
 
 ContactListItem.propTypes = {
-	passBackId: PropTypes.func.isRequired,
 	delete: PropTypes.func.isRequired,
-	item: PropTypes.object.isRequired
+	item: PropTypes.object.isRequired,
+	navigation: PropTypes.object.isRequired,
+	details: PropTypes.object.isRequired
 };

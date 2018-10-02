@@ -4,13 +4,13 @@ import {
 	StyleSheet,
 	ScrollView,
 	SectionList,
-	ActivityIndicator
+	ActivityIndicator,
 } from 'react-native';
 
 import ContactListItem from '../components/ContactListItem';
 import ContactListHeader from '../components/ContactListHeader';
 import Colors from '../constants/colors';
-import data from '../ass2data.json';
+import wholeData from '../ass2data.json';
 import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
@@ -42,22 +42,23 @@ export default class ContactListScreen extends React.Component {
 	}
 
 	componentDidMount() {
-		const { sections, dataById } = this.convertData(data);
+		const { sections, dataById } = this.convertData(wholeData);
 		this.sort(sections);
 		this.setState({ sections: sections, dataById: dataById, loaded: true });
 	}
+
 
 	/**
 	 * Creates two data structures from the given array that are used within the component
 	 * dataById is a dictionary with ID as key and the item as value
 	 * sections is an array of sections where each section is an object with a section title and
 	 * an array containg the data
-	 * @param {Array} data
+	 * @param {Array} wholeData
 	 */
-	convertData(data) {
+	convertData(wholeData) {
 		let dataById = {};
 		id = 1;
-		// acc er fylki
+		const data = wholeData.splice(0, 100);
 		let sections = data.reduce((acc, item) => {
 			var found = false;
 			// create object to map items by ID
@@ -68,7 +69,6 @@ export default class ContactListScreen extends React.Component {
 				id: id,
 				name: item.name.first_name + ' ' + item.name.last_name
 			};
-
 			for (var index in acc) {
 				if (acc[index].title == key) {
 					acc[index].data.push(value);
@@ -105,23 +105,13 @@ export default class ContactListScreen extends React.Component {
 
 	/**
 	 * Sorts the sections array and each data array within it
-	 * @param {Array} data
+	 * @param {Array} sections
 	 */
 	sort(sections) {
 		sections.sort(this.compare('title'));
 		for (var i in sections) {
 			sections[i].data.sort(this.compare('name'));
 		}
-	}
-
-	/***
-	 * Navigate to the detail screen
-	 */
-	toDetails(id) {
-		this.props.navigation.navigate(
-			'ContactDetail',
-			this.state.dataById[id]
-		);
 	}
 
 	/***
@@ -157,15 +147,21 @@ export default class ContactListScreen extends React.Component {
 								<View style={styles.item}>
 									<ContactListItem
 										delete={id => this.delete(id)}
-										passBackId={id => {
-											this.toDetails(id);
-										}}
+										//passBackId={id => {
+										//	this.toDetails(id);
+										//}}
 										item={item}
+										details={this.state.dataById[item.id]}
+										navigation={this.props.navigation}
 									/>
 								</View>
 							)}
-							keyExtractor={(item, index) => item + index}
-						/>
+							keyExtractor={(item, index) => item + index} 
+							initialNumToRender={15}
+							removeClippedSubviews={true}
+							maxToRenderPerBatch={15}
+							/>
+
 					</ScrollView>
 				</View>
 			);
@@ -175,6 +171,6 @@ export default class ContactListScreen extends React.Component {
 	}
 }
 
-ContactDetailScreen.propTypes = {
+ContactListScreen.propTypes = {
 	navigation: PropTypes.object.isRequired
 };

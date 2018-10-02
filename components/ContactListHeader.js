@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import Colors from '../constants/colors';
-import Fonts from '../constants/fonts';
 
 const styles = StyleSheet.create({
 	container: {
@@ -10,7 +9,6 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.hotpink
 	},
 	text: {
-		fontFamily: Fonts.contactHeader,
 		fontSize: 36,
 		marginLeft: 5,
 		paddingTop: 5,
@@ -31,5 +29,5 @@ export default class ContactListItem extends React.Component {
 }
 
 ContactListItem.propTypes = {
-	title: PropTypes.object.isRequired
+	title: PropTypes.string.isRequired
 };
