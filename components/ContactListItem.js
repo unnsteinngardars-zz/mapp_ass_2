@@ -58,19 +58,20 @@ export default class ContactListItem extends React.Component {
 		return this.props != nextProps;
 	}
 
-	
 	/***
 	 * Navigate to the detail screen
 	 */
 	toDetails(id) {
-		this.props.navigation.navigate(
+		const { navigation, details } = this.props;
+		navigation.navigate(
 			'ContactDetail',
-			this.props.details
+			details
 		);
 	}
 
 	shouldComponentUpdate(nextProps) {
-		if(this.props.details == nextProps.details) {
+		const { details } = this.props;
+		if(details == nextProps.details) {
 			return false;
 		}
 		return true;
@@ -79,7 +80,6 @@ export default class ContactListItem extends React.Component {
 
 	render() {
 		const { item } = this.props;
-		//console.log(`Render item: ${item.name}`);
 		return (
 			<View style={styles.container}>
 				<Swipeable

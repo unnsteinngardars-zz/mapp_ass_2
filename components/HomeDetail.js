@@ -18,7 +18,6 @@ export default class HomeDetail extends Component {
 		const { data } = this.props;
 		return (
 			<View style={styles.container}>
-				{/* Map through all values in props recieved.  */}
 				{Object.values(data).map(x => (
 					<Text style={styles.text} key={x}>
 						{x}

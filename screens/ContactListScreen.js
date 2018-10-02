@@ -57,10 +57,10 @@ export default class ContactListScreen extends React.Component {
 	 */
 	convertData(wholeData) {
 		let dataById = {};
-		id = 1;
+		let id = 1;
 		const data = wholeData.splice(0, 100);
-		let sections = data.reduce((acc, item) => {
-			var found = false;
+		const sections = data.reduce((acc, item) => {
+			let found = false;
 			// create object to map items by ID
 			item.id = id;
 			dataById[id] = item;
@@ -131,7 +131,8 @@ export default class ContactListScreen extends React.Component {
 	}
 
 	render() {
-		const { sections } = this.state;
+		const { sections, dataById } = this.state;
+		const { navigation } = this.props;
 		if (this.state.loaded) {
 			return (
 				<View style={styles.container}>
@@ -147,12 +148,9 @@ export default class ContactListScreen extends React.Component {
 								<View style={styles.item}>
 									<ContactListItem
 										delete={id => this.delete(id)}
-										//passBackId={id => {
-										//	this.toDetails(id);
-										//}}
 										item={item}
-										details={this.state.dataById[item.id]}
-										navigation={this.props.navigation}
+										details={dataById[item.id]}
+										navigation={navigation}
 									/>
 								</View>
 							)}

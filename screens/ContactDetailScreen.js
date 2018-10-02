@@ -153,7 +153,6 @@ export default class ContactDetailScreen extends React.Component {
 				</View>
 				<View style={styles.contentContainer}>
 					<Animated.View style={{ opacity, height: '40%' }}>
-						{/* Boolean variable for displaying home or work info.  */}
 						{displayHome ? (
 							<HomeDetail data={home} />
 						) : (
