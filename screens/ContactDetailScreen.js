@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import HomeDetail from '../components/HomeDetail';
 import WorkDetail from '../components/WorkDetail';
-
 import Colors from '../constants/colors';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
 	center: {
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
 		flex: 2,
 		justifyContent: 'flex-start',
 		alignItems: 'center'
-		// paddingBottom: 20
 	},
 	avatar: {
 		width: 200,
@@ -166,3 +165,7 @@ export default class ContactDetailScreen extends React.Component {
 		);
 	}
 }
+
+ContactDetailScreen.propTypes = {
+	navigation: PropTypes.object.isRequired
+};

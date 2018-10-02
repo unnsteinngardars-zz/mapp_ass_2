@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-
+import PropTypes from 'prop-types';
 import Colors from '../constants/colors';
 
 const styles = StyleSheet.create({
@@ -27,3 +27,7 @@ export default class WorkDetail extends Component {
 		);
 	}
 }
+
+WorkDetail.propTypes = {
+	data: PropTypes.object.isRequired
+};

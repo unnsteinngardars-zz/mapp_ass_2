@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-
+import PropTypes from 'prop-types';
 import Colors from '../constants/colors';
 
 const styles = StyleSheet.create({
@@ -28,3 +28,7 @@ export default class HomeDetail extends Component {
 		);
 	}
 }
+
+HomeDetail.propTypes = {
+	data: PropTypes.object.isRequired
+};

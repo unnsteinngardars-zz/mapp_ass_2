@@ -2,7 +2,6 @@ import React from 'react';
 import {
 	View,
 	StyleSheet,
-	Text,
 	ScrollView,
 	SectionList,
 	ActivityIndicator
@@ -12,6 +11,7 @@ import ContactListItem from '../components/ContactListItem';
 import ContactListHeader from '../components/ContactListHeader';
 import Colors from '../constants/colors';
 import data from '../ass2data.json';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
 	container: {
@@ -21,13 +21,11 @@ const styles = StyleSheet.create({
 	},
 	header: {
 		flex: 1,
-		// marginLeft: 10,
 		paddingTop: 10,
 		paddingBottom: 10
 	},
 	item: {
 		flex: 1,
-		// marginLeft: 10,
 		paddingTop: 4,
 		paddingBottom: 4
 	}
@@ -50,7 +48,10 @@ export default class ContactListScreen extends React.Component {
 	}
 
 	/**
-	 * Reduces an array to a dictionary of arrays by the letters of the alphabet
+	 * Creates two data structures from the given array that are used within the component
+	 * dataById is a dictionary with ID as key and the item as value
+	 * sections is an array of sections where each section is an object with a section title and
+	 * an array containg the data
 	 * @param {Array} data
 	 */
 	convertData(data) {
@@ -103,7 +104,7 @@ export default class ContactListScreen extends React.Component {
 	}
 
 	/**
-	 * Sorts the sections array and each data array
+	 * Sorts the sections array and each data array within it
 	 * @param {Array} data
 	 */
 	sort(sections) {
@@ -113,6 +114,9 @@ export default class ContactListScreen extends React.Component {
 		}
 	}
 
+	/***
+	 * Navigate to the detail screen
+	 */
 	toDetails(id) {
 		this.props.navigation.navigate(
 			'ContactDetail',
@@ -120,6 +124,9 @@ export default class ContactListScreen extends React.Component {
 		);
 	}
 
+	/***
+	 * delete an item by id
+	 */
 	delete(id) {
 		const { dataById, sections } = this.state;
 		delete dataById[id];
@@ -135,7 +142,6 @@ export default class ContactListScreen extends React.Component {
 
 	render() {
 		const { sections } = this.state;
-
 		if (this.state.loaded) {
 			return (
 				<View style={styles.container}>
@@ -168,3 +174,7 @@ export default class ContactListScreen extends React.Component {
 		}
 	}
 }
+
+ContactDetailScreen.propTypes = {
+	navigation: PropTypes.object.isRequired
+};

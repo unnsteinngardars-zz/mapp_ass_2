@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import Swipeable from 'react-native-swipeable';
+import PropTypes from 'prop-types';
 import Colors from '../constants/colors';
 import Fonts from '../constants/fonts';
 
@@ -51,13 +52,11 @@ export default class ContactListItem extends React.Component {
 				>
 					<Text style={styles.deleteText}>Delete</Text>
 				</TouchableHighlight>
-				)}
 			</View>
 		];
 	}
 
 	render() {
-		console.log('render contact list item');
 		const { item } = this.props;
 		return (
 			<View style={styles.container}>
@@ -86,3 +85,9 @@ export default class ContactListItem extends React.Component {
 		);
 	}
 }
+
+ContactListItem.propTypes = {
+	passBackId: PropTypes.func.isRequired,
+	delete: PropTypes.func.isRequired,
+	item: PropTypes.object.isRequired
+};
